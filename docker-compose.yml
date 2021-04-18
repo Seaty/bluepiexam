@@ -13,3 +13,16 @@ services:
     ports:
       - "5432:5432"
     restart: unless-stopped
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    command: uvicorn app.main:app --port 8000 --host 0.0.0.0
+    depends_on:
+      - pgdb
+    env_file: .env
+    environment:
+      PRODUCTION: 1
+  

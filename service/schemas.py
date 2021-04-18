@@ -27,6 +27,12 @@ class Game(BaseModel):
     class Meta:
         orm_mode = True
 
+class GameReponse(BaseModel):
+    pos: int
+    value: int
+    clicks: int
+
+
 """ Base Schemas for JWT Token"""
 
 class Token(BaseModel):
@@ -36,4 +42,5 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     username: Optional[str] = None
+
         

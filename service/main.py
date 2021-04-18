@@ -30,7 +30,7 @@ def new_game(user=Depends(auth.get_current_user), db: Session = Depends(get_db))
     return {"message": "ready"}
 
 
-"""================== Web socket Zone ================== """
+""" ================== Web socket Zone ================== """
 
 class ConnectionManager:
     def __init__(self):
@@ -66,21 +66,35 @@ async def update_best_score(websocket, user, db):
 async def websocket_endpoint(websocket: WebSocket, db: Session = Depends(get_db)):
     await manager.connect(websocket)
     try:
+        # เช็ค Token และ ผู้เล่น
         token = await websocket.receive_text()
         user = await auth.get_current_user(token, db)
+        # อัพเดทคะแนนสูงสุดของผู้เล่นและ Global
         await update_best_score(websocket,user,db)
+        # เริ่มเกม
         while True:
-
+            #รับข้อมูลจาก client
             data = await websocket.receive_text()
-            if data[:5] == "click":
-                pos = int(data[6:])
-
+            #แยกส่วนข้อมูลเพื่อทำการเช็ค
+            split_data = data.split(":")
+            if split_data[0] == "click":
+                #ข้อมุลตำแหน่งที่คลิก
+                pos = int(split_data[1])
+                value, clicks, solved = crud.card_click(db, user, pos)
+                gameResponse = schemas.GameReponse(pos=pos,value=value,clicks=clicks)
+                await manager.send_personal_message(gameResponse.dict(),websocket)
+                # เช็คว่าเปิดครบทุกใบแล้วถูกต้อง
+                if solved:
+                    # อัพเดทคะแนนสูงสุดของผู้เล่นและ Global
+                    await update_best_score(websocket,user,db)
     except WebSocketDisconnect:
         manager.disconnect(websocket)
     except Exception as err:
         print(err)
+        #ดัก Error ที่ตั้งขึ้นด้วยตัวเอง
         if hasattr(err, 'detail'):
             await manager.send_personal_message(f"Error: {err.detail}", websocket)
+        #ดัก Error ที่เกิดขึ้นเองในโปรแกรม
         else:
             await manager.send_personal_message(f"Error: {err.args[0]}", websocket)
         manager.disconnect(websocket)
