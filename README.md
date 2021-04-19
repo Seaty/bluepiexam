@@ -51,10 +51,10 @@ SECRET_KEY=Hex String ที่สร้างมา
 
 | รูปแบบ                                         | คำอธิบาย                                          | ตัวอย่าง                              |
 | ---------------------------------------------- | ------------------------------------------------- | ------------------------------------- |
-| Global:[int]                                   | เป็นคะแนน Global Best Score ของผู้เล่นทุกคน       | Global:12                             |
-| Score[int]                                     | เป็นคะแนน Best Score ของผู้เล่นปัจจุบัน           | Score:20                              |
-| Error:[string]                                 | ส่งมาเมื่อเกิดความผิดพลาดในระบบ                   | Error: Could not validate credentials |
-| {"pos": [int], "value":[int], "clicks": [int]} | เป็นข้อมูลการเปิดการ์ด (ซึ่งจะอธิบายในตารางต่อไป) | {"pos": 1, "value": 5, "clicks": 1}   |
+| Global:`int`                                   | เป็นคะแนน Global Best Score ของผู้เล่นทุกคน       | Global:12                             |
+| Score`int`                                     | เป็นคะแนน Best Score ของผู้เล่นปัจจุบัน           | Score:20                              |
+| Error:`string`                                 | ส่งมาเมื่อเกิดความผิดพลาดในระบบ                   | Error: Could not validate credentials |
+| {"pos": `int`, "value":`int`, "clicks": `int`} | เป็นข้อมูลการเปิดการ์ด (ซึ่งจะอธิบายในตารางต่อไป) | {"pos": 1, "value": 5, "clicks": 1}   |
 
 ### ข้อมูลการเปิดการ์ด (คำอธิบาย)
 
