@@ -1,15 +1,23 @@
 from typing import List, Optional
 from fastapi import Depends, FastAPI,  WebSocket, WebSocketDisconnect
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from . import crud, models, schemas, auth
 from .database import SessionLocal, engine, get_db
 from datetime import timedelta, datetime
 from .settings import ACCESS_TOKEN_EXPIRE_MINUTES
+import json
 
 models.Base.metadata.create_all(bind=engine)
-
+origins = ["*"]
 app = FastAPI()
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 """================== Api Zone ================== """
 
@@ -63,7 +71,8 @@ async def update_best_score(websocket, user, db):
         global_best_score = crud.get_global_best_score(db)
         await manager.broadcast(f"Global:{global_best_score}")
         await manager.send_personal_message(f"Score:{player_best_score}", websocket)
-    except:
+    except Exception as error:
+        print(error)
         pass
 
 
@@ -88,7 +97,7 @@ async def websocket_endpoint(websocket: WebSocket, db: Session = Depends(get_db)
                 value, clicks, solved = crud.card_click(db, user, pos)
                 gameResponse = schemas.GameReponse(
                     pos=pos, value=value, clicks=clicks)
-                await manager.send_personal_message(gameResponse.dict(), websocket)
+                await manager.send_personal_message(json.dumps(gameResponse.dict()), websocket)
                 # เช็คว่าเปิดครบทุกใบแล้วถูกต้อง
                 if solved:
                     # อัพเดทคะแนนสูงสุดของผู้เล่นและ Global

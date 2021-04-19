@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-
+from random import shuffle
 from . import models, schemas
 
 
@@ -35,7 +35,7 @@ def start_game(db: Session, user: schemas.UserBase):
     shuffle(cards)
 
     for i in cards:
-        db_card = models.Card(desk_id=new_game.id,value=i)
+        db_card = models.Card(game_id=new_game.id,value=i)
         db.add(db_card)
         db.commit()
 
@@ -43,12 +43,10 @@ def start_game(db: Session, user: schemas.UserBase):
     return new_game
 
 def get_player_best_score(db:Session,user:str):
-    score = db.query(models.Game).filter_by(solved=True, user_id=user.id).order_by(models.Game.clicks)
-    return score[0].clicks if len(score) > 0 else 0
+    return db.query(models.Game).filter_by(solved=True, user_id=user.id).order_by(models.Game.clicks)[0].clicks
 
 def get_global_best_score(db:Session):
-    score = db.query(models.Game).filter_by(solved=True).order_by(models.Game.clicks)
-    return score[0].clicks if len(score) > 0 else 0
+    return db.query(models.Game).filter_by(solved=True).order_by(models.Game.clicks)[0].clicks
 
 
 def card_click(db, user, pos):

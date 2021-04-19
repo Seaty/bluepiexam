@@ -9,7 +9,7 @@
       "type": "python",
       "request": "launch",
       "module": "uvicorn",
-      "args": ["service.main:app", "--reload", "--port", "8001"],
+      "args": ["service.main:app", "--reload", "--port", "8000"],
     }
   ]
 }
