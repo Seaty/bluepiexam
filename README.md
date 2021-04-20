@@ -20,9 +20,10 @@ SECRET_KEY=Hex String ที่สร้างมา
 
 1. ลง docker และ docker-compose ในเครื่อง
 2. Clone repository นี้ไปยังเครื่อง Production
-3. ใช้คำสั่ง docker-compose build
-4. ใช้คำสั่ง docker-compose up
-5. สามารถใช้ API ได้เลย
+3. cd ไปยังโฟลเดอร์ bluepiexam
+4. ใช้คำสั่ง docker-compose build
+5. ใช้คำสั่ง docker-compose up
+6. สามารถใช้ API ได้เลย
 
 ## ข้อมูลการใช้งาน API
 

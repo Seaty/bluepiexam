@@ -15,5 +15,8 @@ describe('ExamCheck', function () {
          expect(response.body).to.have.property("access_token")
          expect(response.body).to.have.property("token_type", "Bearer")
       })
+   }),
+   it('socket play card', function () {
+
    })
 })
