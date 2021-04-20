@@ -22,7 +22,7 @@ app.add_middleware(
 """================== Api Zone ================== """
 
 
-@app.post("/get_token", response_model=schemas.Token)
+@app.post("/api/get_token", response_model=schemas.Token)
 def create_user(user: schemas.UserBase, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_username(db, username=user.username)
     if not db_user:
@@ -34,7 +34,7 @@ def create_user(user: schemas.UserBase, db: Session = Depends(get_db)):
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@app.get("/start_new_game")
+@app.get("/api/start_new_game")
 def new_game(user=Depends(auth.get_current_user), db: Session = Depends(get_db)):
     crud.start_game(db, user)
     return {"message": "ready"}
@@ -76,7 +76,7 @@ async def update_best_score(websocket, user, db):
         pass
 
 
-@app.websocket("/playgame")
+@app.websocket("/api/playgame")
 async def websocket_endpoint(websocket: WebSocket, db: Session = Depends(get_db)):
     await manager.connect(websocket)
     try:
