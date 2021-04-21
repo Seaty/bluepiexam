@@ -20,9 +20,29 @@ SECRET_KEY=Hex String ที่สร้างมา
 
 1. ลง docker และ docker-compose ในเครื่อง
 2. Clone repository นี้ไปยังเครื่อง Production
+
+```bash
+git clone https://github.com/Seaty/bluepiexam.git
+```
+
 3. cd ไปยังโฟลเดอร์ bluepiexam
-4. ใช้คำสั่ง docker-compose build
-5. ใช้คำสั่ง docker-compose up
+
+```bash
+cd bluepiexam
+```
+
+4. ใช้คำสั่ง docker-compose build ในเทอมินอล
+
+```bash
+docker-compose build
+```
+
+5. ใช้คำสั่ง docker-compose up ในเทอมินอล
+
+```bash
+docker-compose up
+```
+
 6. สามารถใช้ API ได้เลย
 
 ## ข้อมูลการใช้งาน API
@@ -49,10 +69,10 @@ http://{HOSTNAME}/api/get_token
 
 ### รูปแบบการส่งข้อมูลใน Websocket
 
-| รูปแบบ                         | คำอธิบาย                                                 | ตัวอย่าง                                       |
-| ------------------------------ | -------------------------------------------------------- | ---------------------------------------------- |
-| String ของ Token               | ส่งเพื่อทำการยืนยันตัวตนในการเล่น                        | eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzd.... |
-| click:`int` | ส่งค่านี้เพื่อระบุว่าผู้เล่นเปิดการ์ดตำแหน่งที่เท่าไหร่ | click:1 (เปิดการ์ดตำแหน่งที่ 1)                |
+| รูปแบบ           | คำอธิบาย                                                | ตัวอย่าง                                       |
+| ---------------- | ------------------------------------------------------- | ---------------------------------------------- |
+| String ของ Token | ส่งเพื่อทำการยืนยันตัวตนในการเล่น                       | eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzd.... |
+| click:`int`      | ส่งค่านี้เพื่อระบุว่าผู้เล่นเปิดการ์ดตำแหน่งที่เท่าไหร่ | click:1 (เปิดการ์ดตำแหน่งที่ 1)                |
 
 ### รูปแบบการรับข้อมูลใน Websocket
 
@@ -76,3 +96,21 @@ http://{HOSTNAME}/api/get_token
 **สรุปข้อมูลการเปิดการ์ด**
 
 {"pos": 1, "value": 5, "clicks": 3} = การ์ดตำแหน่งที่ 1 มีค่าเท่ากับ 5 และผู้เล่นหงายการ์ดไปทั้ง 3 ครั้งในตานี้
+
+## ทดสอบ API จากโปรแกรม Cypress
+
+โดยที่จะรัน Test Script จะต้องทำตามขั้ตอนดังนี้
+
+1. เปิดเทอมินอล เปลี่ยน path ไปยังโฟลเดอร์ api_testing
+
+```bash
+cd api_testing
+```
+
+2. ทำการลง node modules ที่ต้องใช้งานด้วยคำสั่ง
+
+```bash
+ืnpm install
+```
+
+3. หลังจากลงเสร็จให้ใช้คำสั่ง `npm run test` เพื่อทำการเทส

@@ -6,7 +6,7 @@ describe('Play Game', function() {
     it('Test Get Token', function() {
        cy.request({
           method : 'POST',
-          url : 'http://10.255.248.92/api/get_token',
+          url : 'http://localhost/api/get_token',
           body: {
             "username": "test"
           },
@@ -20,7 +20,7 @@ describe('Play Game', function() {
     it('Test Start Game', function() {
       cy.request({
          method : 'GET',
-         url : 'http://10.255.248.92/api/start_new_game',
+         url : 'http://localhost/api/start_new_game',
          headers: {
             'content-type' : 'application/json',
             'Authorization' : "Bearer" + " " + Tokens
