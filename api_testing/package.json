@@ -1,0 +1,14 @@
+{
+  "name": "api_testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "testgame.spec.js",
+  "scripts": {
+    "cypress:open": "cypress open "
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^7.1.0"
+  }
+}
