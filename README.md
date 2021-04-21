@@ -110,7 +110,11 @@ cd api_testing
 2. ทำการลง node modules ที่ต้องใช้งานด้วยคำสั่ง
 
 ```bash
-ืnpm install
+npm install
 ```
 
-3. หลังจากลงเสร็จให้ใช้คำสั่ง `npm run test` เพื่อทำการเทส
+3. หลังจากลงเสร็จให้ใช้คำสั่งเพื่อทำการเทส
+
+```bash
+npm run test
+```
